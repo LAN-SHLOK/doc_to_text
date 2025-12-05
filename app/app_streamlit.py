@@ -1,4 +1,31 @@
 # app_streamlit.py
+
+# ====== PATH FIX: ensure "core" package is importable ======
+import sys, os
+from pathlib import Path
+
+def ensure_core_on_path(max_up=8):
+    this_file = Path(__file__).resolve()
+    # walk up parents and add the first ancestor that contains "core" dir
+    for i in range(0, min(max_up, len(this_file.parents))):
+        candidate = this_file.parents[i]
+        if (candidate / "core").is_dir():
+            cand_str = str(candidate)
+            if cand_str not in sys.path:
+                sys.path.insert(0, cand_str)
+            return True
+    # fallback: add repo root guess (two levels up) if nothing found
+    fallback = str(this_file.parents[min(2, len(this_file.parents)-1)])
+    if fallback not in sys.path:
+        sys.path.insert(0, fallback)
+    return False
+
+_found = ensure_core_on_path()
+# Optional debug line (uncomment while debugging)
+# print(f"ensure_core_on_path -> {_found}; sys.path[0:5]={sys.path[:5]}")
+# ===========================================================
+
+# now safe to import app deps and core
 import streamlit as st
 import json
 from pathlib import Path
