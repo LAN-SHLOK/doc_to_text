@@ -1,0 +1,13 @@
+pdfminer.six
+pdf2image
+pillow
+pytesseract
+opencv-python-headless
+python-docx
+python-pptx
+pandas
+pyspellchecker
+streamlit
+# optional: keep pymupdf and easyocr only if you want to try them on hosts that support them
+# pymupdf
+# easyocr
